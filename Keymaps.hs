@@ -1,6 +1,9 @@
 module Keymaps where
   import System.Process
+  setSpawnKeymaps :: [(String, String)] -> IO ()
+  setMetaKeymaps :: [(String, String)] -> IO ()
   setMouse :: IO ()
+  setTagsKeymaps :: [Int] -> IO ()
   keymapsSpawn =
     [ ("Q", "wezterm")
     , ("M", "wlogout")
@@ -49,7 +52,8 @@ module Keymaps where
     |otherwise = return ()
   setMouse = do {
       ;callCommand "riverctl map-pointer normal Super BTN_LEFT move-view"
-      ;callCommand "riverctl map-pointer normal Super BTN_RIGHT resize-view"}
+      ;callCommand "riverctl map-pointer normal Super BTN_RIGHT resize-view"
+      ;return ()}
 
 
 

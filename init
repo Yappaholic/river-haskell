@@ -1,5 +1,7 @@
 #!/usr/bin/env runhaskell
 import Start
 main :: IO ()
-main = do
-  Start.start
+main = do {
+  ;Start.start
+	;return ()
+  }

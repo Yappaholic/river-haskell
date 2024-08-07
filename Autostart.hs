@@ -1,5 +1,7 @@
 module Autostart where
   import System.Process
+  programmStart :: [String] -> IO ()
+  keyboardStart :: [(String, String)] -> IO ()
   autoSpawn = ["hyprpaper", "i3bar-river", "gammastep"]
   wideriver = "wideriver \
     \--layout left \

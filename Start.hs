@@ -9,4 +9,5 @@ start =
     ;setEnvVars Env.env_vars
     ;setKeymaps
     ;autoStart
+    ;return ()
   }
