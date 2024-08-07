@@ -1,10 +1,10 @@
-module Main where
+module Start where
 import System.Process
 import Env
 import Keymaps
 import Autostart
-main :: IO ()
-main = 
+start :: IO ()
+start =
   do {
     ;setEnvVars Env.env_vars
     ;setKeymaps

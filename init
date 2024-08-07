@@ -1,2 +1,5 @@
-#!/usr/bin/env sh
-runhaskell ./Main.hs
+#!/usr/bin/env runhaskell
+import Start
+main :: IO ()
+main = do
+  Start.start
