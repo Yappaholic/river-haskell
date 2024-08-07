@@ -1,6 +1,6 @@
 module Keymaps where
   import System.Process
-
+  setMouse :: IO ()
   keymapsSpawn =
     [ ("Q", "wezterm")
     , ("M", "wlogout")
@@ -23,27 +23,33 @@ module Keymaps where
   setKeymaps = do
     setSpawnKeymaps keymapsSpawn
     setMetaKeymaps keymapsMeta
+    setMouse
     let xs = [1..10] in setTagsKeymaps xs
 
   setSpawnKeymaps (x:xs)
     |xs /= [] = do { 
-  										;let r = "riverctl map normal Super " ++ fst x ++ " spawn " ++ snd x
-  										in callCommand r
-                      ;setSpawnKeymaps xs}
+      ;let r = "riverctl map normal Super " ++ fst x ++ " spawn " ++ snd x
+      in callCommand r
+      ;setSpawnKeymaps xs}
     |otherwise = return ()
   setMetaKeymaps (x:xs)
     |xs /= [] = do { 
-  										;let r = "riverctl map normal Super" ++ uncurry (++) x
-  										in callCommand r
-                      ;setMetaKeymaps xs}
+      ;let r = "riverctl map normal Super" ++ uncurry (++) x
+      in callCommand r
+      ;setMetaKeymaps xs}
     |otherwise = return ()
   setTagsKeymaps (x: xs) 
     | xs /= [] = do {
-    	;let r ="riverctl map normal Super " ++ show x ++ " set-focused-tags " ++ show (2 ^ (x-1)) in
-      callCommand r
+      ;let view ="riverctl map normal Super " ++ show x ++ " set-focused-tags " ++ show (2 ^ (x-1)) in
+      callCommand view
+      ;let switch ="riverctl map normal Super+Shift " ++ show x ++ " set-view-tags " ++ show (2 ^ (x-1)) in
+      callCommand switch
       ;setTagsKeymaps xs
       }
     |otherwise = return ()
+  setMouse = do {
+      ;callCommand "riverctl map-pointer normal Super BTN_LEFT move-view"
+      ;callCommand "riverctl map-pointer normal Super BTN_RIGHT resize-view"}
 
 
 
