@@ -19,28 +19,28 @@ module Autostart where
     \--border-width-smart-gaps 0 \
     \--border-color-focused 0x93a1a1 \
     \--border-color-focused-monocle 0x586e75 \
-    \--border-color-unfocused 0x586e75 "
+    \--border-color-unfocused 0x586e75 &!"
   autoKeyboard =
     [ ("set-repeat ", "50 300")
     , ("focus-follows-cursor ", "normal")
-    , ("keyboard-layout -options ", "'grp:alt_shift_toggle' us,ru")
     , ("default-layout ", "wideriver")
     , ("rule-add ", "-app-id wideriver csd")]
   programmStart (x:xs) 
     |xs /= [] = do {
-      ;let r = "riverctl spawn " ++ x in callCommand r
+      ;let r = "riverctl spawn " ++ x in spawnCommand r
       ;programmStart xs 
     }
     |otherwise = return ()
   keyboardStart (x:xs) 
     |xs /= [] = do {
-      ;let r = "riverctl " ++ uncurry (++) x in callCommand r
+      ;let r = "riverctl " ++ uncurry (++) x in spawnCommand r
       ;keyboardStart xs 
     }
     |otherwise = return ()
   autoStart = do {
+  ;callCommand "riverctl keyboard-layout -options 'grp:alt_shift_toggle' us,ru"
   ;keyboardStart autoKeyboard 
   ;programmStart autoSpawn
-  ;callCommand wideriver
+  ;spawnCommand wideriver
   ;return ()
   }
